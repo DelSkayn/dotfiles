@@ -218,7 +218,6 @@ return require("packer").startup(function()
         end
     }
 
-    use { 'rust-lang/rust.vim'}
 
     use 'folke/tokyonight.nvim'
 
@@ -230,9 +229,12 @@ return require("packer").startup(function()
         end
     }
 
+    -- Language support 
+    --
+    use { 'rust-lang/rust.vim'}
     use 'cespare/vim-toml'
-
     use 'tikhomirov/vim-glsl'
+    use 'blankname/vim-fish'
 
     -- use 'marko-cerovac/material.nvim'
     --use 'shaunsingh/nord.nvim'
