@@ -1,0 +1,67 @@
+require("packer").startup(function()
+    -- The package manager
+    use 'wbthomason/packer.nvim'
+
+    use 'kyazdani42/nvim-web-devicons'
+
+    --use 'mhinz/vim-startify'
+    -- A completion framework
+    --use 'hrsh7th/nvim-compe'
+    --use 'hrsh7th/vim-vsnip'
+    --use 'neovim/nvim-lspconfig'
+    --use 'folke/lsp-trouble.nvim'
+    --use 'glepnir/lspsaga.nvim'
+
+    -- A file tree
+    -- use 'preservim/nerdtree'
+    use 'kyazdani42/nvim-tree.lua'
+
+    -- The status bar
+    --use 'vim-airline/vim-airline'
+    use {
+      'hoob3rt/lualine.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
+
+    use 'romgrk/barbar.nvim'
+
+    -- Better syntax highlighting
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+
+    -- A theme
+    --use 'morhetz/gruvbox'
+    use 'folke/tokyonight.nvim'
+
+    -- language support
+    use 'rust-lang/rust.vim'   
+    use  'tikhomirov/vim-glsl'
+
+    -- use 'liuchengxu/vim-which-key'
+
+    -- use {
+        -- 'nvim-telescope/telescope.nvim',
+        -- requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    -- }
+end)
+require("opts")();
+
+vim.cmd[[colorscheme tokyonight]]
+
+require("nvim-treesitter.configs").setup{
+    ensure_installed = "maintained",
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = true,
+        disable = {"python"},
+    }
+}
+
+local tree_cb = require("nvim-tree.config").nvim_tree_callback
+vim.g.nvim_tree_bindings = {
+    ["i"] = tree_cb("split"),
+    ["s"] = tree_cb("vsplit"),
+}
+vim.g.nvim_tree_quit_on_open = 1
+vim.g.nvim_tree_ignore = { '.git' }
