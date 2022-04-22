@@ -16,47 +16,11 @@ M.bind = function(mode, lhs, rhs, ...)
 
   -- if we pass in a lua function
   if type(rhs) == 'function' then
-    -- make a vim readable expression that will call our function
-    -- in the global _bindfuncs table
-    bindfunc_i = bindfunc_i + 1
-    local name = 'bindfunc_' .. tostring(bindfunc_i)
-    _bindfuncs[name] = rhs
-    -- if we use `cmd` the function return value is ignored
-    if opt.cmd then
-      rhs = '<cmd>call v:lua._bindfuncs.' .. name .. '()<cr>'
-      -- remove cmd because its not actually valid as an option
-      opt.cmd = nil
-    else
-      -- otherwise we call it as an expression using the return value
-      rhs = 'v:lua._bindfuncs.' .. name .. '()'
-      opt.expr = true
-    end
+      opt.callback = rhs
+      rhs = ""
   end
 
   return vim.api.nvim_set_keymap(mode, lhs, rhs, opt)
 end
-
--- util function to define autocmds
-
--- global table to hold our functions
-_autofuncs = {}
--- current bindfunc index
-local autofunc_i = 0
-
-M.autofunc = function(event, pattern, action)
-  -- if we pass in a lua function
-  if type(action) == 'function' then
-    -- make a vim readable expression that will call our function
-    -- in the global _autofuncs table
-    autofunc_i = autofunc_i + 1
-    local name = 'autofunc_' .. tostring(autofunc_i)
-    _autofuncs[name] = action
-    action = 'call v:lua._autofuncs.' .. name .. '()'
-  end
-
-  -- space seperated string with all those componments
-  return vim.cmd(table.concat({'autocmd', event, pattern, action}, ' '))
-end
-
 
 return M

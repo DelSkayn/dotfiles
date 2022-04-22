@@ -1,4 +1,3 @@
-local autofunc = require("utils").autofunc;
 
 vim.opt.shortmess="atOI"
 vim.opt.ignorecase = true
@@ -98,14 +97,17 @@ end
 vim.cmd [[ au TermOpen term://* setlocal nonumber norelativenumber | setfiletype terminal ]]
 
 -- disable statusline on some ft
-autofunc("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter","*", function()
-    hidden = {"NvimTree","terminal","Trouble"}
-    local api = vim.api
-    local buftype = api.nvim_buf_get_option("%", "ft")
-    if vim.tbl_contains(hidden,buftype) then
-        api.nvim_set_option("laststatus",0)
-        return
+vim.api.nvim_create_autocmd("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter",{
+    pattern = "*",
+    callback = function()
+        hidden = {"NvimTree","terminal","Trouble"}
+        local api = vim.api
+        local buftype = api.nvim_buf_get_option(0, "ft")
+        if vim.tbl_contains(hidden,buftype) then
+            api.nvim_set_option("laststatus",0)
+            return
+        end
+        api.nvim_set_option("laststatus",2)
     end
-    api.nvim_set_option("laststatus",2)
-end)
+})
 

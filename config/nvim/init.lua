@@ -1,6 +1,6 @@
+require("plugins")
 require("opts")
 require("mappings")
-require("plugins")
 
 vim.cmd[[colorscheme tokyonight]]
 --

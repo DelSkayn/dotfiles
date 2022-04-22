@@ -1,6 +1,5 @@
 local utils = require("utils")
 local bind = utils.bind
-local autofunc = utils.autofunc
 
 bind("n","<Leader>ff",":NvimTreeToggle<CR>","silent","noremap")
 
@@ -43,34 +42,44 @@ bind("n", "<leader>tw", ":execute 'terminal' | let b:term_type = 'wind' | starti
 bind("n", "<leader>tv", ":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>")
 bind("n", "<leader>ts", ":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>")
 
-bind("n","<leader>tf",require("telescope.builtin").find_files,"cmd")
-bind("n","<leader>tg",require("telescope.builtin").live_grep,"cmd")
-bind("n","<leader>tb",require("telescope.builtin").buffers,"cmd")
-bind("n","<leader>th",require("telescope.builtin").help_tags,"cmd")
+bind("n","<leader>tf",require("telescope.builtin").find_files)
+bind("n","<leader>tg",require("telescope.builtin").live_grep)
+bind("n","<leader>tb",require("telescope.builtin").buffers)
+bind("n","<leader>th",require("telescope.builtin").help_tags)
 
-bind("n","<leader>la",require("telescope.builtin").lsp_code_actions,"cmd")
-bind("n","<leader>ls",require("telescope.builtin").lsp_document_symbols,"cmd")
-bind("n","<leader>lS",require("telescope.builtin").lsp_workspace_symbols,"cmd")
-
-
-bind("n","z=",require("telescope.builtin").spell_suggest,"cmd")
-
-autofunc("filetype","rust",function()
-    bind("n","<Leader>mc",":make check<CR>","silent");
-    bind("n","<Leader>mC",":make clean<CR>","silent");
-    bind("n","<Leader>ml",":make clippy<CR>","silent");
-    bind("n","<Leader>md",":make doc<CR>","silent");
-    bind("n","<Leader>mD",":make doc --open<CR>","silent");
-    bind("n","<Leader>mb",":make build<CR>","silent");
-    bind("n","<Leader>mt",":make test<CR>","silent");
-    bind("n","<Leader>mr",":make run<CR>","silent");
-    autofunc("BufWritePre","<buffer>",vim.lsp.buf.formatting_sync);
-end)
+bind("n","<leader>la",require("telescope.builtin").lsp_code_actions)
+bind("n","<leader>ls",require("telescope.builtin").lsp_document_symbols)
+bind("n","<leader>lS",require("telescope.builtin").lsp_workspace_symbols)
 
 
-autofunc("filetype","tex",function()
-    bind("n","<Leader>mc",":VimtexCompile<CR>","silent")
-    vim.o.spell=true
-    vim.cmd[[set colorcolumn=100]]
-    vim.cmd[[set tw=100]]
-end)
+bind("n","z=",require("telescope.builtin").spell_suggest)
+
+
+vim.api.nvim_create_autocmd("filetype",{
+    pattern = "rust",
+    callback = function()
+        bind("n","<Leader>mc",":make check<CR>","silent");
+        bind("n","<Leader>mC",":make clean<CR>","silent");
+        bind("n","<Leader>ml",":make clippy<CR>","silent");
+        bind("n","<Leader>md",":make doc<CR>","silent");
+        bind("n","<Leader>mD",":make doc --open<CR>","silent");
+        bind("n","<Leader>mb",":make build<CR>","silent");
+        bind("n","<Leader>mt",":make test<CR>","silent");
+        bind("n","<Leader>mr",":make run<CR>","silent");
+        vim.api.nvim_create_autocmd("BufWritePre",{
+            pattern = "<buffer>",
+            callback = vim.lsp.buf.formatting_sync
+        })
+    end
+})
+
+
+vim.api.nvim_create_autocmd("filetype",{
+    pattern = "tex",
+    callback = function()
+        bind("n","<Leader>mc",":VimtexCompile<CR>","silent")
+        vim.o.spell=true
+        vim.cmd[[set colorcolumn=100]]
+        vim.cmd[[set tw=100]]
+    end
+})
