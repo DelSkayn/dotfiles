@@ -10,3 +10,4 @@ unlink ../.config/nvim
 unlink ../.config/i3
 unlink ../.config/yambar
 unlink ../.config/compton-cfg
+unlink ../.config/wezterm

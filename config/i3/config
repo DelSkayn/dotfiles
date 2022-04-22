@@ -44,7 +44,7 @@ set_from_resource $c_alert      color1     #cc241d
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec wezterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
