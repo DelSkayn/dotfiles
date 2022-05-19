@@ -42,14 +42,15 @@ bind("n", "<leader>tw", ":execute 'terminal' | let b:term_type = 'wind' | starti
 bind("n", "<leader>tv", ":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>")
 bind("n", "<leader>ts", ":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>")
 
-bind("n","<leader>tf",require("telescope.builtin").find_files)
-bind("n","<leader>tg",require("telescope.builtin").live_grep)
-bind("n","<leader>tb",require("telescope.builtin").buffers)
-bind("n","<leader>th",require("telescope.builtin").help_tags)
+bind("n","<leader>tf",require("telescope.builtin").find_files,"silent")
+bind("n","<leader>tg",require("telescope.builtin").live_grep,"silent")
+bind("n","<leader>tb",require("telescope.builtin").buffers,"silent")
+bind("n","<leader>th",require("telescope.builtin").help_tags,"silent")
 
-bind("n","<leader>la",require("telescope.builtin").lsp_code_actions)
-bind("n","<leader>ls",require("telescope.builtin").lsp_document_symbols)
-bind("n","<leader>lS",require("telescope.builtin").lsp_workspace_symbols)
+--bind("n","<leader>la",require("telescope.builtin").lsp_code_actions,"silent")
+bind("n","<leader>ls",require("telescope.builtin").lsp_document_symbols,"silent")
+bind("n","<leader>lS",require("telescope.builtin").lsp_workspace_symbols,"silent")
+bind("n","<leader>la",vim.lsp.buf.code_action,"silent")
 
 
 bind("n","z=",require("telescope.builtin").spell_suggest)

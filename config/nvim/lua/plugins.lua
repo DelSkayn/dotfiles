@@ -8,34 +8,29 @@ return require("packer").startup(function()
         required = 'kyazdani42/nvim-web-devicons',
         cmd = "NvimTreeToggle",
         config = function()
-            local g = vim.g
-            local tree_cb = require("nvim-tree.config").nvim_tree_callback
             local mappings = {
-                { key = "v", cb = tree_cb "vsplit"},
-                { key = "s", cb = tree_cb "split"},
+                { key = "v", action= "vsplit"},
+                { key = "s", action = "split"},
             }
 
-            g.nvim_tree_root_folder_modifier = table.concat { ":t:gs?$?/..", string.rep(" ", 1000), "?:gs?^??" }
-
-            g.nvim_tree_show_icons = {
-                git = 1,
-                folders = 1,
-                files = 1,
-                -- folder_arrows= 1
-            }
-
-            g.nvim_tree_window_picker_exclude = {
-                filetype ={
-                    "Trouble",
-                    "terminal",
-                    "qf"
+            require("nvim-tree").setup{
+                actions = {
+                    open_file = {
+                        window_picker = {
+                            exclude = {
+                                filetype ={
+                                    "Trouble",
+                                    "terminal",
+                                    "qf"
+                                },
+                                buftype = {
+                                    "quickfix",
+                                    "terminal"
+                                }
+                            }
+                        }
+                    }
                 },
-                buftype = {
-                    "quickfix"
-                }
-            }
-
-            require('nvim-tree').setup{
                 diagnostics = {
                     enable = true,
                     icons = {
@@ -61,48 +56,6 @@ return require("packer").startup(function()
             require("statusline")
         end,
     }
-
-   --- use {
-   ---     "akinsho/nvim-bufferline.lua",
-   ---     config = function()
-   ---         require("bufferline").setup {
-   ---             options = {
-   ---                 offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
-   ---                 buffer_close_icon = "",
-   ---                 modified_icon = "",
-   ---                 left_trunc_marker = "",
-   ---                 right_trunc_marker = "",
-   ---                 max_name_length = 14,
-   ---                 max_prefix_length = 13,
-   ---                 tab_size = 20,
-   ---                 show_tab_indicators = true,
-   ---                 enforce_regular_tabs = false,
-   ---                 view = "multiwindow",
-   ---                 show_buffer_close_icons = true,
-   ---                 separator_style = "thin",
-   ---                 always_show_bufferline = true,
-   ---                 custom_filter = function(buf_number)
-   ---                     -- Func to filter out our managed/persistent split terms
-   ---                     local present_type, type = pcall(function()
-   ---                         return vim.api.nvim_buf_get_var(buf_number, "term_type")
-   ---                     end)
-
-   ---                     if present_type then
-   ---                         if type == "vert" then
-   ---                             return false
-   ---                         elseif type == "hori" then
-   ---                             return false
-   ---                         else
-   ---                             return true
-   ---                         end
-   ---                     else
-   ---                         return true
-   ---                     end
-   ---                 end,
-   ---             },
-   ---         }
-   ---     end,
-   --- }
 
     use{
         "akinsho/bufferline.nvim",
@@ -234,6 +187,7 @@ return require("packer").startup(function()
         end
     }
 
+    use {'nvim-telescope/telescope-ui-select.nvim' }
 
     use 'folke/tokyonight.nvim'
 
@@ -247,8 +201,16 @@ return require("packer").startup(function()
 
     -- Language support 
     --
-    use { 'rust-lang/rust.vim'}
-    use 'cespare/vim-toml'
+    use { 'rust-lang/rust.vim' }
+    --use { 
+        --'simrat39/rust-tools.nvim',
+        --ft = "rust",
+        --config = function()
+            --require('rust-tools').setup({})
+        --end
+    --}
+
+    use { 'cespare/vim-toml' }
     use 'tikhomirov/vim-glsl'
     use 'blankname/vim-fish'
 

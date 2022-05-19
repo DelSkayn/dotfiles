@@ -11,7 +11,7 @@ M.bind = function(mode, lhs, rhs, ...)
   -- for every optional argument we make a field in the opts table
   -- the field will be set to true
   -- we do this because the neovim api wants {thing1: true, thing2: true, ...}
-  local opt = {}
+  local opt = {noremap = true}
   for _, a in ipairs({...}) do opt[a] = true end
 
   -- if we pass in a lua function
@@ -21,6 +21,23 @@ M.bind = function(mode, lhs, rhs, ...)
   end
 
   return vim.api.nvim_set_keymap(mode, lhs, rhs, opt)
+end
+
+
+M.bind_buf = function(buf,mode, lhs, rhs, ...)
+  -- for every optional argument we make a field in the opts table
+  -- the field will be set to true
+  -- we do this because the neovim api wants {thing1: true, thing2: true, ...}
+  local opt = {}
+  for _, a in ipairs({...}) do opt[a] = true end
+
+  -- if we pass in a lua function
+  if type(rhs) == 'function' then
+      opt.callback = rhs
+      rhs = ""
+  end
+
+  return vim.api.nvim_buf_set_keymap(buf,mode, lhs, rhs, opt)
 end
 
 return M

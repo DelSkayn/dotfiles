@@ -1,41 +1,43 @@
-local lspconfig = require("lspconfig");
+vim.lsp.set_log_level("debug");
 
+local lspconfig = require("lspconfig");
+local bind_buf = require("utils").bind_buf;
+local bind = require("utils").bind;
+
+bind("n","<leader>ln",vim.lsp.diagnostic.goto_prev,"noremap","silent")
+bind("n","<leader>lp",vim.lsp.diagnostic.goto_next,"noremap","silent")
+bind("n","<liader>lq",vim.lsp.diagnostic.set_loclist,"noremap","silent")
 
 local function on_attach(client, bufnr)
-   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-   local opts = { noremap = true, silent = true }
+    local function bind(...)
+        bind_buf(bufnr,...)
+    end
 
-   local function buf_set_keymap(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-   end
+    -- require("lsp_signature").on_attach()
 
-   -- require("lsp_signature").on_attach()
+    -- Mappings.
 
-   -- Mappings.
+    bind("n", "<leader>le", vim.lsp.buf.declaration, "noremap","silent")
+    bind("n", "<leader>ld", vim.lsp.buf.definition, "noremap","silent")
+    bind("n", "K", vim.lsp.buf.hover, "noremap","silent")
+    bind("n", "<leader>li", vim.lsp.buf.implementation, "noremap","silent")
+    bind("n", "<C-k>", vim.lsp.buf.signature_help, "noremap","silent")
+    bind("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "noremap","silent")
+    bind("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "noremap","silent")
+    -- bind("n", "<leader>wl", print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", "noremap","silent")
+    bind("n", "<leader>lD", vim.lsp.buf.type_definition, "noremap","silent")
+    bind("n", "<leader>lR", vim.lsp.buf.rename, "noremap","silent")
+    bind("n", "<leader>lr", vim.lsp.buf.references, "noremap","silent")
+    bind("n", "<leader>li", vim.lsp.diagnostic.show_line_diagnostics, "noremap","silent")
 
-   buf_set_keymap("n", "<leader>le", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-   buf_set_keymap("n", "<leader>ld", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-   buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-   buf_set_keymap("n", "<leader>li", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-   buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-   buf_set_keymap("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-   buf_set_keymap("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-   buf_set_keymap("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-   buf_set_keymap("n", "<leader>lD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-   buf_set_keymap("n", "<leader>lR", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-   buf_set_keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-   buf_set_keymap("n", "<leader>li", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-   buf_set_keymap("n", "<leader>ln", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-   buf_set_keymap("n", "<leader>lp", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-   buf_set_keymap("n", "<liader>lq", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-
-   -- Set some keybinds conditional on server capabilities
-   if client.resolved_capabilities.document_formatting then
-      buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-   elseif client.resolved_capabilities.document_range_formatting then
-      buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-   end
+    -- Set some keybinds conditional on server capabilities
+    if client.resolved_capabilities.document_formatting then
+        bind("n", "<leader>f", vim.lsp.buf.formatting, "noremap","silent")
+    elseif client.resolved_capabilities.document_range_formatting then
+        bind("n", "<leader>f", vim.lsp.buf.range_formatting, "noremap","silent")
+    end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
