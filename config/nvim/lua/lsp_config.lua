@@ -1,4 +1,4 @@
-vim.lsp.set_log_level("debug");
+-- vim.lsp.set_log_level("debug");
 
 local lspconfig = require("lspconfig");
 local bind_buf = require("utils").bind_buf;
@@ -59,6 +59,11 @@ lspconfig["rust_analyzer"].setup {
     }
 }
 lspconfig["tsserver"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+lspconfig["jdtls"].setup{
     on_attach = on_attach,
     capabilities = capabilities,
 }

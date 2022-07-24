@@ -1,4 +1,6 @@
 
+vim.o.shell = "/usr/bin/bash"
+
 vim.opt.shortmess="atOI"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -67,6 +69,10 @@ vim.opt.termguicolors=true
 vim.g.mapleader = " "
 vim.opt.completeopt={"menuone","noselect"}
 
+if vim.g.started_by_firenvim then
+    vim.api.nvim_set_option("laststatus",0)
+end
+
 local disabled_built_ins = {
     "netrw",
     "netrwPlugin",
@@ -107,7 +113,11 @@ vim.api.nvim_create_autocmd("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter
             api.nvim_set_option("laststatus",0)
             return
         end
-        api.nvim_set_option("laststatus",2)
+        if vim.g.started_by_firenvim then
+            api.nvim_set_option("laststatus",0)
+        else
+            api.nvim_set_option("laststatus",2)
+        end
     end
 })
 

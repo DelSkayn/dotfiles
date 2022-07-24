@@ -38,9 +38,9 @@ bind("n","<leader>wv",":vsplit<CR>")
 
 -- Open terminals
 -- TODO this opens on top of an existing vert/hori term, fixme
-bind("n", "<leader>tw", ":execute 'terminal' | let b:term_type = 'wind' | startinsert <CR>")
-bind("n", "<leader>tv", ":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>")
-bind("n", "<leader>ts", ":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>")
+bind("n", "<leader>tw", ":execute 'terminal fish' | let b:term_type = 'wind' | startinsert <CR>","silent")
+bind("n", "<leader>tv", ":execute 'vnew' | execute 'terminal fish' | let b:term_type = 'vert' | startinsert <CR>","silent")
+bind("n", "<leader>ts", ":execute 15 .. 'new' | execute  'terminal fish' | let b:term_type = 'hori' | startinsert <CR>","silent")
 
 bind("n","<leader>tf",require("telescope.builtin").find_files,"silent")
 bind("n","<leader>tg",require("telescope.builtin").live_grep,"silent")
@@ -67,10 +67,6 @@ vim.api.nvim_create_autocmd("filetype",{
         bind("n","<Leader>mb",":make build<CR>","silent");
         bind("n","<Leader>mt",":make test<CR>","silent");
         bind("n","<Leader>mr",":make run<CR>","silent");
-        vim.api.nvim_create_autocmd("BufWritePre",{
-            pattern = "<buffer>",
-            callback = vim.lsp.buf.formatting_sync
-        })
     end
 })
 

@@ -53,6 +53,9 @@ return require("packer").startup(function()
     use {
         "hoob3rt/lualine.nvim",
         config = function()
+            if vim.g.started_by_firenvim then
+                return
+            end
             require("statusline")
         end,
     }
@@ -60,6 +63,9 @@ return require("packer").startup(function()
     use{
         "akinsho/bufferline.nvim",
         config = function()
+            if vim.g.started_by_firenvim then
+                return
+            end
             require("bufferline").setup{
                 options = {
                     buffer_close_icon = "",
@@ -201,7 +207,13 @@ return require("packer").startup(function()
 
     -- Language support 
     --
-    use { 'rust-lang/rust.vim' }
+    use { 
+        'rust-lang/rust.vim',
+        ft = "rust",
+        config = function()
+            vim.g.rustfmt_autosave = 1
+        end
+    }
     --use { 
         --'simrat39/rust-tools.nvim',
         --ft = "rust",
@@ -214,6 +226,10 @@ return require("packer").startup(function()
     use 'tikhomirov/vim-glsl'
     use 'blankname/vim-fish'
 
+    use {
+        'glacambre/firenvim',
+        run = function() vim.fn['firenvim#install'](0) end 
+    }
     -- use 'marko-cerovac/material.nvim'
     --use 'shaunsingh/nord.nvim'
 end)

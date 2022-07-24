@@ -5,21 +5,20 @@
 # the sway-xkb module with the xkb module.
 
 # fonts we'll be re-using here and there
-awesome: &awesome TerminessTTF Nerd Font:style=solid:pixelsize=20
-awesome_brands: &awesome_brands TerminessTTF Nerd Font:pixelsize=28
+awesome: &awesome TerminessTTF Nerd Font:style=solid:pixelsize=12
+awesome_brands: &awesome_brands TerminessTTF Nerd Font:pixelsize=16
 
 std_underline: &std_underline {underline: { size: 2, color: ff0000ff}}
 
 # This is THE bar configuration
 bar:
-  height: 42
+  height: 26
   location: top
   spacing: 0
   margin: 0
-  monitor: DP-4
 
   # Default font
-  font: monospace:pixelsize=20
+  font: monospace:pixelsize=12
 
   background: 24283bff
   foreground: c0caf5ff
@@ -33,7 +32,7 @@ bar:
   left:
     - i3:
         anchors: # Not used (directly) by f00bar; used here to avoid duplication
-          - string: &i3_common {margin: 5, on-click: "i3-msg --quiet workspace {name}"}
+          - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
           - string: &default {<<: *i3_common, text: "类 {name}",font: *awesome}
           - string: &main    {<<: *i3_common, text: , font: *awesome}
           - string: &surfing {<<: *i3_common, text: , font: *awesome_brands}
@@ -186,11 +185,11 @@ bar:
                     true:
                       - string: {<<: *optical, deco: *std_underline}
                       - string: {text: "{label}"}
-                        # - sway-xkb:
-                        #     identifiers: [1:1:AT_Translated_Set_2_keyboard]
-                        #     content:
-                        #       - string: {text: , font: *awesome}
-                        #       - string: {text: "  {layout}"}
+    - sway-xkb:
+        identifiers: [1:1:AT_Translated_Set_2_keyboard]
+        content:
+          - string: {text: , font: *awesome}
+          - string: {text: "  {layout}"}
             # - network:
             #     name: enp1s0
             #     content:
@@ -210,7 +209,7 @@ bar:
             #                     values:
             #                       "": {string: {text: , font: *awesome, foreground: ffffff66}}
     - network:
-        name: enp38s0
+        name: wlp1s0
         content:
           map:
             tag: state
@@ -227,50 +226,49 @@ bar:
                     "":
                       - string: {text: , font: *awesome, foreground: ffffff66}
                       - string: {text: " {name} ", foreground: ffffff66}
-
-                        #- battery:
-                        #    name: BAT0
-                        #    poll-interval: 30
-                        #    content:
-                        #      map:
-                        #        tag: state
-                        #        values:
-                        #          discharging:
-                        #            - ramp:
-                        #                tag: capacity
-                        #                items:
-                        #                  - string: {text: , foreground: ff0000ff, font: *awesome}
-                        #                  - string: {text: , foreground: ffa600ff, font: *awesome}
-                        #                  - string: {text: , font: *awesome}
-                        #                  - string: {text: , font: *awesome}
-                        #                  - string: {text: , font: *awesome}
-                        #                  - string: {text: , font: *awesome}
-                        #                  - string: {text: , font: *awesome}
-                        #                  - string: {text: , font: *awesome}
-                        #                  - string: {text: , font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #            - string: {text: "  {capacity}% {estimate}"}
-                        #          charging:
-                        #            - string: {text: , foreground: 00ff00ff, font: *awesome}
-                        #            - string: {text: "  {capacity}% {estimate}"}
-                        #          full:
-                        #            - string: {text: , foreground: 00ff00ff, font: *awesome}
-                        #            - string: {text: "  {capacity}% full"}
-                        #          not charging:
-                        #            - ramp:
-                        #                tag: capacity
-                        #                items:
-                        #                  - string: {text:  , foreground: ff0000ff, font: *awesome}
-                        #                  - string: {text:  , foreground: ffa600ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #                  - string: {text:  , foreground: 00ff00ff, font: *awesome}
-                        #            - string: {text: "  {capacity}%"}
+    - battery:
+        name: BAT0
+        poll-interval: 30
+        content:
+          map:
+            tag: state
+            values:
+              discharging:
+                - ramp:
+                    tag: capacity
+                    items:
+                      - string: {text: , foreground: ff0000ff, font: *awesome}
+                      - string: {text: , foreground: ffa600ff, font: *awesome}
+                      - string: {text: , font: *awesome}
+                      - string: {text: , font: *awesome}
+                      - string: {text: , font: *awesome}
+                      - string: {text: , font: *awesome}
+                      - string: {text: , font: *awesome}
+                      - string: {text: , font: *awesome}
+                      - string: {text: , font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                - string: {text: "  {capacity}% {estimate}"}
+              charging:
+                - string: {text: , foreground: 00ff00ff, font: *awesome}
+                - string: {text: "  {capacity}% {estimate}"}
+              full:
+                - string: {text: , foreground: 00ff00ff, font: *awesome}
+                - string: {text: "  {capacity}% full"}
+              not charging:
+                - ramp:
+                    tag: capacity
+                    items:
+                      - string: {text:  , foreground: ff0000ff, font: *awesome}
+                      - string: {text:  , foreground: ffa600ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                      - string: {text:  , foreground: 00ff00ff, font: *awesome}
+                - string: {text: "  {capacity}%"}
     - clock:
         time-format: "%H:%M %Z"
         content:

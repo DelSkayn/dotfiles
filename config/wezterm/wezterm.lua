@@ -29,7 +29,7 @@ colors = {
 return {
     use_fancy_tab_bar=false,
     colors = colors,
-    font_size = 10,
+    font_size = 11,
     font = wezterm.font_with_fallback({
         {family = "Terminus",italic=false},
         "TerminessTTF Nerd Font",
