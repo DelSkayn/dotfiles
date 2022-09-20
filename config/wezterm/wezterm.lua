@@ -29,7 +29,7 @@ colors = {
 return {
     use_fancy_tab_bar=false,
     colors = colors,
-    font_size = 11,
+    font_size = 10,
     font = wezterm.font_with_fallback({
         {family = "Terminus",italic=false},
         "TerminessTTF Nerd Font",
@@ -43,5 +43,9 @@ return {
             font = wezterm.font("TerminessTTF Nerd Font",{italic=true})
         }
     },
-    window_padding={left=0,right=0,top=0,bottom=0}
+    window_padding={left=0,right=0,top=0,bottom=0},
+    keys = {
+        -- paste from the clipboard
+        {key="V", mods="CTRL", action=wezterm.action{PasteFrom="Clipboard"}},
+    }
 }
