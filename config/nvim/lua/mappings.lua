@@ -34,6 +34,10 @@ bind("n", "<leader>W", ":Telescope terms <CR>")
 bind("n", "<leader>ws", ":split<CR>")
 bind("n", "<leader>wv", ":vsplit<CR>")
 
+
+bind("n", "[e", ":cprev<CR>")
+bind("n", "]e", ":cnext<CR>")
+
 -- Open terminals
 -- TODO this opens on top of an existing vert/hori term, fixme
 bind("n", "<leader>tw", ":execute 'terminal fish' | let b:term_type = 'wind' | startinsert <CR>", "silent")

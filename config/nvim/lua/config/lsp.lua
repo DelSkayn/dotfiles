@@ -2,9 +2,9 @@ local lspconfig = require("lspconfig")
 local bind_buf = require("utils").bind_buf
 local bind = require("utils").bind
 
-bind("n", "<leader>ln", vim.lsp.diagnostic.goto_prev, "noremap", "silent")
-bind("n", "<leader>lp", vim.lsp.diagnostic.goto_next, "noremap", "silent")
-bind("n", "<liader>lq", vim.lsp.diagnostic.set_loclist, "noremap", "silent")
+bind("n", "[d", vim.lsp.diagnostic.goto_prev, "noremap", "silent")
+bind("n", "]d", vim.lsp.diagnostic.goto_next, "noremap", "silent")
+bind("n", "<leader>lq", vim.lsp.diagnostic.set_loclist, "noremap", "silent")
 
 local function on_attach(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -17,15 +17,15 @@ local function on_attach(client, bufnr)
 
 	-- Mappings.
 
-	bind("n", "<leader>le", vim.lsp.buf.declaration, "noremap", "silent")
-	bind("n", "<leader>ld", vim.lsp.buf.definition, "noremap", "silent")
+	bind("n", "gD", vim.lsp.buf.declaration, "noremap", "silent")
+	bind("n", "gd", vim.lsp.buf.definition, "noremap", "silent")
 	bind("n", "K", vim.lsp.buf.hover, "noremap", "silent")
-	bind("n", "<leader>li", vim.lsp.buf.implementation, "noremap", "silent")
+	bind("n", "gI", vim.lsp.buf.implementation, "noremap", "silent")
 	bind("n", "<C-k>", vim.lsp.buf.signature_help, "noremap", "silent")
 	bind("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "noremap", "silent")
 	bind("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "noremap", "silent")
 	-- bind("n", "<leader>wl", print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", "noremap","silent")
-	bind("n", "<leader>lD", vim.lsp.buf.type_definition, "noremap", "silent")
+	bind("n", "<leader>ld", vim.lsp.buf.type_definition, "noremap", "silent")
 	bind("n", "<leader>lR", vim.lsp.buf.rename, "noremap", "silent")
 	bind("n", "<leader>lr", vim.lsp.buf.references, "noremap", "silent")
 	bind("n", "<leader>li", vim.lsp.diagnostic.show_line_diagnostics, "noremap", "silent")
