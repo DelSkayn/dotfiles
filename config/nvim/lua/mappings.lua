@@ -1,5 +1,4 @@
-local utils = require("utils")
-local bind = utils.bind
+local bind = require("utils").bind
 
 bind("n", "<Leader>ff", ":NvimTreeToggle<CR>", "silent", "noremap")
 
@@ -33,7 +32,6 @@ bind("n", "<leader>W", ":Telescope terms <CR>")
 
 bind("n", "<leader>ws", ":split<CR>")
 bind("n", "<leader>wv", ":vsplit<CR>")
-
 
 bind("n", "[e", ":cprev<CR>")
 bind("n", "]e", ":cnext<CR>")

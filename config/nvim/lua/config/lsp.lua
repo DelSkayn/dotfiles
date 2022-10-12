@@ -2,14 +2,15 @@ local lspconfig = require("lspconfig")
 local bind_buf = require("utils").bind_buf
 local bind = require("utils").bind
 
-bind("n", "[d", vim.lsp.diagnostic.goto_prev, "noremap", "silent")
-bind("n", "]d", vim.lsp.diagnostic.goto_next, "noremap", "silent")
-bind("n", "<leader>lq", vim.lsp.diagnostic.set_loclist, "noremap", "silent")
+--what
+bind("n", "[d", vim.diagnostic.goto_prev, "noremap", "silent")
+bind("n", "]d", vim.diagnostic.goto_next, "noremap", "silent")
+bind("n", "<leader>lq", vim.diagnostic.setloclist, "noremap", "silent")
 
 local function on_attach(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	local function bind(...)
+	local bind = function(...)
 		bind_buf(bufnr, ...)
 	end
 
@@ -28,12 +29,12 @@ local function on_attach(client, bufnr)
 	bind("n", "<leader>ld", vim.lsp.buf.type_definition, "noremap", "silent")
 	bind("n", "<leader>lR", vim.lsp.buf.rename, "noremap", "silent")
 	bind("n", "<leader>lr", vim.lsp.buf.references, "noremap", "silent")
-	bind("n", "<leader>li", vim.lsp.diagnostic.show_line_diagnostics, "noremap", "silent")
+	bind("n", "<leader>li", vim.diagnostic.show, "noremap", "silent")
 
 	-- Set some keybinds conditional on server capabilities
-	if client.resolved_capabilities.document_formatting then
+	if client.server_capabilities.document_formatting then
 		bind("n", "<leader>f", vim.lsp.buf.formatting, "noremap", "silent")
-	elseif client.resolved_capabilities.document_range_formatting then
+	elseif client.server_capabilities.document_range_formatting then
 		bind("n", "<leader>f", vim.lsp.buf.range_formatting, "noremap", "silent")
 	end
 end
