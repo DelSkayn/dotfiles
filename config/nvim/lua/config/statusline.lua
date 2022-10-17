@@ -17,9 +17,9 @@ end
 local lsp_progress = function()
 	local Lsp = vim.lsp.util.get_progress_messages()[1]
 	if Lsp ~= nil then
-		vim.defer_fn(function()
-			require("lualine").refresh()
-		end, 250)
+		-- vim.defer_fn(function()
+			-- require("lualine").refresh()
+		-- end, 250)
 	end
 	return Lsp
 			and string.format(

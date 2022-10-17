@@ -100,6 +100,20 @@ end
 -- Don't show any numbers inside terminals
 vim.cmd([[ au TermOpen term://* setlocal nonumber norelativenumber | setfiletype terminal ]])
 
+vim.api.nvim_create_autocmd("BufWritePre",{
+    pattern = "*",
+    callback = vim.lsp.buf.format
+})
+
+vim.api.nvim_create_autocmd("filetype",{
+    pattern = "javascript,typescript,javascriptreact,typescriptreact",
+    callback = function()
+        vim.opt.shiftwidth = 2
+        vim.opt.tabstop = 2
+        vim.opt.softtabstop = 2
+    end
+})
+
 -- disable statusline on some ft
 vim.api.nvim_create_autocmd("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter", {
 	pattern = "*",

@@ -32,10 +32,9 @@ local function on_attach(client, bufnr)
 	bind("n", "<leader>li", vim.diagnostic.show, "noremap", "silent")
 
 	-- Set some keybinds conditional on server capabilities
-	if client.server_capabilities.document_formatting then
-		bind("n", "<leader>f", vim.lsp.buf.formatting, "noremap", "silent")
-	elseif client.server_capabilities.document_range_formatting then
-		bind("n", "<leader>f", vim.lsp.buf.range_formatting, "noremap", "silent")
+    print(client.server_capabilities.documentFormattingProvider)
+	if client.server_capabilities.documentFormattingProvider then
+		bind("n", "<leader>f", vim.lsp.buf.format, "noremap", "silent")
 	end
 end
 

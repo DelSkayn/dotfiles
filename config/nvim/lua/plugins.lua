@@ -229,6 +229,7 @@ return require("packer").startup(function()
 	use({ "cespare/vim-toml" })
 	use("tikhomirov/vim-glsl")
 	use("blankname/vim-fish")
+    use("alunny/pegjs-vim")
 
 	-- Browser integration
 	use({
