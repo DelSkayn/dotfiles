@@ -1,6 +1,6 @@
---vim.o.shell = "/usr/bin/bash"
+vim.o.shell = "/usr/bin/bash"
 
-vim.opt.shortmess = "atOIF"
+vim.opt.shortmess = "atOI"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.scrolljump = 5
@@ -98,31 +98,22 @@ for _, plugin in pairs(disabled_built_ins) do
 end
 
 -- Don't show any numbers inside terminals
--- vim.cmd([[ au TermOpen term://* setlocal nonumber norelativenumber | setfiletype terminal ]])
+vim.cmd([[ au TermOpen term://* setlocal nonumber norelativenumber | setfiletype terminal ]])
 
-vim.api.nvim_create_autocmd("TermOpen", {
-	pattern = "term://*",
-	callback = function()
-		vim.bo.shell = "/usr/bin/fish"
-		vim.wo.number = false
-		vim.bo.filetype = "terminal"
-	end,
-})
-
-vim.api.nvim_create_autocmd("filetype", {
-	pattern = "javascript,typescript,javascriptreact,typescriptreact",
-	callback = function()
-		vim.opt.shiftwidth = 2
-		vim.opt.tabstop = 2
-		vim.opt.softtabstop = 2
-	end,
+vim.api.nvim_create_autocmd("filetype",{
+    pattern = "javascript,typescript,javascriptreact,typescriptreact",
+    callback = function()
+        vim.opt.shiftwidth = 2
+        vim.opt.tabstop = 2
+        vim.opt.softtabstop = 2
+    end
 })
 
 -- disable statusline on some ft
 vim.api.nvim_create_autocmd("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter", {
 	pattern = "*",
 	callback = function()
-		hidden = { "NvimTree", "terminal", "Trouble" }
+		hidden = { "NvimTree", "terminal", "Trouble", "neo-tree" }
 		local api = vim.api
 		local buftype = api.nvim_buf_get_option(0, "ft")
 		if vim.tbl_contains(hidden, buftype) then
@@ -136,11 +127,3 @@ vim.api.nvim_create_autocmd("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter
 		end
 	end,
 })
-
--- vim.api.nvim_create_autocmd("filetype",{
---   pattern = "tex",
--- callback = function()
---   -- to stop which key from complaining that the leader keymap is set
--- vim.keymap.del("n","<leader>")
--- end
--- })

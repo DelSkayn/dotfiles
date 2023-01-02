@@ -1,12 +1,16 @@
-pcall(require, "impatient")
+require("opts")
+require("plugin-manager")
+require("keymap")
 
-for _, source in ipairs({
-	"plugins",
-	"opts",
-	"mappings",
-}) do
-	local status_ok, fault = pcall(require, source)
-	if not status_ok then
-		vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\t" .. fault)
-	end
-end
+--local config_files = {
+    --"opts",
+    --"plugin-manager",
+    --"keymap",
+--}
+
+--for _, source in ipairs(config_files) do
+	--local ok,fault = pcall(require,source)
+	--if not ok then
+		--util.error("Failed to load config file `" .. source .. "`:\n\t" .. fault)
+	--end
+--end
