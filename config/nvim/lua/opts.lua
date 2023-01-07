@@ -118,6 +118,16 @@ vim.api.nvim_create_autocmd("filetype", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("filetype", {
+	pattern = "tex",
+	callback = function()
+		vim.opt.shiftwidth = 2
+		vim.opt.tabstop = 2
+		vim.opt.softtabstop = 2
+		vim.cmd([[set colorcolumn=100]])
+	end,
+})
+
 -- disable statusline on some ft
 vim.api.nvim_create_autocmd("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter", {
 	pattern = "*",

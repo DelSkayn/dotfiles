@@ -20,15 +20,15 @@ wk.register({
 	t = {
 		name = "+term",
 		w = {
-			"execute 'terminal fish' | let b:term_type = 'wind' | startinsert <CR>",
+			":execute 'terminal fish' | let b:term_type = 'wind' | startinsert <CR>",
 			"Open terminal in window",
 		},
 		v = {
-			"execute 'vnew' | 'terminal fish' | let b:term_type = 'vert' | startinsert <CR>",
+			":execute 'vnew' | 'terminal fish' | let b:term_type = 'vert' | startinsert <CR>",
 			"Open terminal vertically",
 		},
 		s = {
-			"execute 'new' | 'terminal fish' | let b:term_type = 'vert' | startinsert <CR>",
+			":execute 'new' | 'terminal fish' | let b:term_type = 'vert' | startinsert <CR>",
 			"Open terminal horizontally",
 		},
 	},
@@ -36,6 +36,10 @@ wk.register({
 		name = "+error",
 		o = { "<cmd>TroubleToggle<CR>", "Open diagonostics" },
 		q = { "<cmd>TroubleToggle quickfix<CR>", "Open quickfix" },
+	},
+	m = {
+		name = "+meta",
+		m = { "<cmd>Mason<CR>", "Open Mason" },
 	},
 }, { prefix = "<leader>" })
 
@@ -46,6 +50,7 @@ vim.api.nvim_create_autocmd("filetype", {
 			l = {
 				name = "language",
 				c = { ":VimtexCompile<CR>", "Compile" },
+				g = { ":VimtexView<CR>", "Show text" },
 			},
 		}, { prefix = "<leader>" })
 		vim.wo.spell = true
@@ -77,6 +82,27 @@ vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { silent = true })
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { silent = true })
 
+vim.keymap.set("n", "z=", "<cmd>Telescope spell_suggest<CR>", { silent = true })
+
 -- Reselect visual selectation after indent.
 vim.keymap.set("v", "<", "<gv", { silent = true })
 vim.keymap.set("v", ">", ">gv", { silent = true })
+
+vim.api.nvim_create_autocmd("filetype", {
+	pattern = "rust",
+	callback = function()
+		wk.register({
+			l = {
+				name = "language",
+				c = { "<cmd>make check<CR>", "Check" },
+				C = { "<cmd>make check<CR>", "Clippy" },
+				n = { "<cmd>make clean<CR>", "Clean" },
+				d = { "<cmd>make doc<CR>", "Document" },
+				D = { "<cmd>make doc --open<CR>", "Document open" },
+				b = { "<cmd>make build<CR>", "Build" },
+				t = { "<cmd>make test<CR>", "test" },
+				r = { "<cmd>make run<CR>", "run" },
+			},
+		}, { prefix = "<leader>" })
+	end,
+})

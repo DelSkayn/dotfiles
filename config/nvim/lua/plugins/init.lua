@@ -1,6 +1,7 @@
 return {
 	"jose-elias-alvarez/typescript.nvim",
 	"ManifTanjim/nui.nvim",
+	"folke/which-key.nvim",
 	{
 		"nvim-telescope/telescope-ui-select.nvim",
 		event = "VeryLazy",
@@ -25,11 +26,8 @@ return {
 		event = "VeryLazy",
 	},
 	{
-		"folke/which-key.nvim",
-		lazy = true,
-	},
-	{
 		"williamboman/mason.nvim",
+		cmd = { "Mason" },
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",

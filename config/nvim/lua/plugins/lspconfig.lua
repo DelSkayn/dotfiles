@@ -83,6 +83,9 @@ end
 function M.config()
 	local nls = require("plugins.null-ls")
 
+	require("mason").setup()
+	require("mason-lspconfig").setup()
+
 	local function on_attach(client, bufnr)
 		on_attach_formatting(client, bufnr)
 		on_attach_keymap(client, bufnr)
