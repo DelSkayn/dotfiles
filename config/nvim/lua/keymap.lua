@@ -20,15 +20,21 @@ wk.register({
 	t = {
 		name = "+term",
 		w = {
-			":execute 'terminal fish' | let b:term_type = 'wind' | startinsert <CR>",
+			function()
+				require("nvterm.terminal").toggle("float")
+			end,
 			"Open terminal in window",
 		},
 		v = {
-			":execute 'vnew' | 'terminal fish' | let b:term_type = 'vert' | startinsert <CR>",
+			function()
+				require("nvterm.terminal").toggle("vertical")
+			end,
 			"Open terminal vertically",
 		},
 		s = {
-			":execute 'new' | 'terminal fish' | let b:term_type = 'vert' | startinsert <CR>",
+			function()
+				require("nvterm.terminal").toggle("horizontal")
+			end,
 			"Open terminal horizontally",
 		},
 	},

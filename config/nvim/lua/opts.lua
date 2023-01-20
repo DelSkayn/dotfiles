@@ -103,7 +103,6 @@ end
 vim.api.nvim_create_autocmd("TermOpen", {
 	pattern = "term://*",
 	callback = function()
-		vim.bo.shell = "/usr/bin/fish"
 		vim.wo.number = false
 		vim.bo.filetype = "terminal"
 	end,

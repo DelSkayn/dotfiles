@@ -3,6 +3,12 @@ return {
 	"ManifTanjim/nui.nvim",
 	"folke/which-key.nvim",
 	{
+		"NvChad/nvterm",
+		config = function()
+			require("nvterm").setup()
+		end,
+	},
+	{
 		"nvim-telescope/telescope-ui-select.nvim",
 		event = "VeryLazy",
 	},
