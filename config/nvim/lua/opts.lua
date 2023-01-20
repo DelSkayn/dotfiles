@@ -110,7 +110,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 vim.api.nvim_create_autocmd("filetype", {
-	pattern = "javascript,typescript,javascriptreact,typescriptreact",
+	pattern = "javascript,typescript,javascriptreact,typescriptreact,svelte",
 	callback = function()
 		vim.opt.shiftwidth = 2
 		vim.opt.tabstop = 2

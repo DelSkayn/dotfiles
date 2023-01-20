@@ -20,6 +20,8 @@ local servers = {
 			},
 		},
 	},
+	pyright = {},
+	svelte = {},
 }
 
 function M.format()
