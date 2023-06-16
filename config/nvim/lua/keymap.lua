@@ -94,6 +94,8 @@ vim.keymap.set("n", "z=", "<cmd>Telescope spell_suggest<CR>", { silent = true })
 vim.keymap.set("v", "<", "<gv", { silent = true })
 vim.keymap.set("v", ">", ">gv", { silent = true })
 
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+
 vim.api.nvim_create_autocmd("filetype", {
 	pattern = "rust",
 	callback = function()
@@ -101,13 +103,12 @@ vim.api.nvim_create_autocmd("filetype", {
 			l = {
 				name = "language",
 				c = { "<cmd>make check<CR>", "Check" },
-				C = { "<cmd>make check<CR>", "Clippy" },
-				n = { "<cmd>make clean<CR>", "Clean" },
-				d = { "<cmd>make doc<CR>", "Document" },
-				D = { "<cmd>make doc --open<CR>", "Document open" },
-				b = { "<cmd>make build<CR>", "Build" },
-				t = { "<cmd>make test<CR>", "test" },
-				r = { "<cmd>make run<CR>", "run" },
+				C = { "<cmd>Cargo clippy<CR>", "Clippy" },
+				n = { "<cmd>Cclean<CR>", "Clean" },
+				d = { "<cmd>Cdoc<CR>", "Document" },
+				b = { "<cmd>Cbuild<CR>", "Build" },
+				t = { "<cmd>Ctest<CR>", "test" },
+				r = { "<cmd>Crun<CR>", "run" },
 			},
 		}, { prefix = "<leader>" })
 	end,

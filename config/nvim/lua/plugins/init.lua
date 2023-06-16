@@ -1,6 +1,10 @@
 return {
 	"jose-elias-alvarez/typescript.nvim",
-	"ManifTanjim/nui.nvim",
+	"MunifTanjim/nui.nvim",
+	{
+		"rust-lang/rust.vim",
+		ft = "rust",
+	},
 	"folke/which-key.nvim",
 	{
 		"NvChad/nvterm",
@@ -21,6 +25,7 @@ return {
 		lazy = false,
 		config = function()
 			vim.cmd([[colorscheme tokyonight]])
+			-- vim.cmd([[colorscheme tokyonight-day]])
 		end,
 	},
 	{

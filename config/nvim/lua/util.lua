@@ -1,6 +1,6 @@
 local M = {}
 
-function M.erro(msg, name)
+function M.error(msg, name)
 	vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
 end
 

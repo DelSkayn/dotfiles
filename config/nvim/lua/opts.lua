@@ -49,6 +49,7 @@ vim.opt.swapfile = false
 vim.opt.writebackup = false
 
 vim.opt.background = "dark"
+-- vim.opt.background = "light"
 vim.opt.cursorline = true
 vim.opt.fileformats = { "unix", "dos", "mac" }
 vim.opt.number = true
