@@ -102,7 +102,17 @@ vim.api.nvim_create_autocmd("filetype", {
 		wk.register({
 			l = {
 				name = "language",
-				c = { "<cmd>make check<CR>", "Check" },
+				m = {
+					name = "run with make",
+					c = { "<cmd>Make check<CR>", "Check" },
+					C = { "<cmd>Make clippy<CR>", "Clippy" },
+					n = { "<cmd>Make clean<CR>", "Clean" },
+					d = { "<cmd>Make doc<CR>", "Document" },
+					b = { "<cmd>Make build<CR>", "Build" },
+					t = { "<cmd>Make test<CR>", "test" },
+					r = { "<cmd>Make run<CR>", "run" },
+				},
+				c = { "<cmd>Cargo check<CR>", "Check" },
 				C = { "<cmd>Cargo clippy<CR>", "Clippy" },
 				n = { "<cmd>Cclean<CR>", "Clean" },
 				d = { "<cmd>Cdoc<CR>", "Document" },
