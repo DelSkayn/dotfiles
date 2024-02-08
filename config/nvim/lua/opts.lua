@@ -70,81 +70,81 @@ vim.g.mapleader = " "
 vim.opt.completeopt = { "menuone", "noselect" }
 
 if vim.g.started_by_firenvim then
-	vim.api.nvim_set_option("laststatus", 0)
+    vim.api.nvim_set_option("laststatus", 0)
 end
 
 local disabled_built_ins = {
-	"netrw",
-	"netrwPlugin",
-	"netrwSettings",
-	"netrwFileHandlers",
-	"gzip",
-	"zip",
-	"zipPlugin",
-	"tar",
-	"tarPlugin",
-	"getscript",
-	"getscriptPlugin",
-	"vimball",
-	"vimballPlugin",
-	"2html_plugin",
-	"logipat",
-	"rrhelper",
-	"spellfile_plugin",
-	"matchit",
+    "netrw",
+    "netrwPlugin",
+    "netrwSettings",
+    "netrwFileHandlers",
+    "gzip",
+    "zip",
+    "zipPlugin",
+    "tar",
+    "tarPlugin",
+    "getscript",
+    "getscriptPlugin",
+    "vimball",
+    "vimballPlugin",
+    "2html_plugin",
+    "logipat",
+    "rrhelper",
+    "spellfile_plugin",
+    "matchit",
 }
 
 for _, plugin in pairs(disabled_built_ins) do
-	vim.g["loaded_" .. plugin] = 1
+    vim.g["loaded_" .. plugin] = 1
 end
 
 -- Don't show any numbers inside terminals
 -- vim.cmd([[ au TermOpen term://* setlocal nonumber norelativenumber | setfiletype terminal ]])
 
 vim.api.nvim_create_autocmd("TermOpen", {
-	pattern = "term://*",
-	callback = function()
-		vim.wo.number = false
-		vim.bo.filetype = "terminal"
-	end,
+    pattern = "term://*",
+    callback = function()
+        vim.wo.number = false
+        vim.bo.filetype = "terminal"
+    end,
 })
 
 vim.api.nvim_create_autocmd("filetype", {
-	pattern = "javascript,typescript,javascriptreact,typescriptreact,svelte",
-	callback = function()
-		vim.opt.shiftwidth = 2
-		vim.opt.tabstop = 2
-		vim.opt.softtabstop = 2
-	end,
+    pattern = "javascript,typescript,javascriptreact,typescriptreact,svelte",
+    callback = function()
+        vim.opt.shiftwidth = 2
+        vim.opt.tabstop = 2
+        vim.opt.softtabstop = 2
+    end,
 })
 
 vim.api.nvim_create_autocmd("filetype", {
-	pattern = "tex",
-	callback = function()
-		vim.opt.shiftwidth = 2
-		vim.opt.tabstop = 2
-		vim.opt.softtabstop = 2
-		vim.cmd([[set colorcolumn=100]])
-	end,
+    pattern = "tex",
+    callback = function()
+        vim.opt.shiftwidth = 2
+        vim.opt.tabstop = 2
+        vim.opt.softtabstop = 2
+        vim.cmd([[set colorcolumn=100]])
+    end,
 })
 
 -- disable statusline on some ft
-vim.api.nvim_create_autocmd("BufEnter,BufWinEnter,WinEnter,CmdwinEnter,TermEnter", {
-	pattern = "*",
-	callback = function()
-		hidden = { "NvimTree", "terminal", "Trouble" }
-		local api = vim.api
-		local buftype = api.nvim_buf_get_option(0, "ft")
-		if vim.tbl_contains(hidden, buftype) then
-			api.nvim_set_option("laststatus", 0)
-			return
-		end
-		if vim.g.started_by_firenvim then
-			api.nvim_set_option("laststatus", 0)
-		else
-			api.nvim_set_option("laststatus", 2)
-		end
-	end,
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter", "CmdwinEnter", "TermEnter" }, {
+    pattern = "*",
+    callback = function()
+        local hidden = { "NvimTree", "terminal", "Trouble" }
+        local api = vim.api
+        local buftype = api.nvim_buf_get_option(0, "ft")
+        if vim.tbl_contains(hidden, buftype) then
+            api.nvim_set_option("laststatus", 0)
+            return
+        end
+        if vim.g.started_by_firenvim then
+            api.nvim_set_option("laststatus", 0)
+        else
+            api.nvim_set_option("laststatus", 2)
+        end
+    end,
 })
 
 -- vim.api.nvim_create_autocmd("filetype",{

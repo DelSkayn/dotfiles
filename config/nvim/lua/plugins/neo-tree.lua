@@ -8,6 +8,7 @@ M.dependencies = {
 	"nvim-tree/nvim-web-devicons",
 	{
 		"s1n7ax/nvim-window-picker",
+        tag = "v1.5",
 		config = function()
 			require("window-picker").setup({
 				autoselect_one = true,
@@ -22,7 +23,6 @@ M.dependencies = {
 						buftype = { "terminal", "quickfix" },
 					},
 				},
-				other_win_hl_color = "#e35e4f",
 			})
 		end,
 	},
@@ -32,7 +32,7 @@ function M.config()
 	vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
 	vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
 	vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-	vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+	vim.fn.sign_define("DiagnosticSignHint", { text = " ", texthl = "DiagnosticSignHint" })
 
 	require("neo-tree").setup({
 		window = {
