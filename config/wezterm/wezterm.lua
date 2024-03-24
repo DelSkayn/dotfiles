@@ -65,6 +65,7 @@ day_colors = {
 }
 
 return {
+    enable_wayland = false,
 	use_fancy_tab_bar = false,
 	colors = night_colors,
 	font_size = 11,

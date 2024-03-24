@@ -1,23 +1,14 @@
 local M = {}
 
-function M.error(msg, name)
-	vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
+function M.on_attach(on_attach)
+    vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+            local buffer = args.buf ---@type number
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            on_attach(client, buffer)
+        end,
+    })
 end
 
-function M.warn(msg, name)
-	vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
-end
-
-function M.info(msg, name)
-	vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
-end
-
-function M.debug(msg, name)
-	vim.notify(msg, vim.log.levels.DEBUG, { title = name or "init.lua" })
-end
-
-function M.trace(msg, name)
-	vim.notify(msg, vim.log.levels.TRACE, { title = name or "init.lua" })
-end
 
 return M

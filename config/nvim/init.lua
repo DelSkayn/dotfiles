@@ -1,16 +1,13 @@
-require("opts")
-require("plugin-manager")
-require("keymap")
+local entry_files = {
+    "opts",
+    "autocmd",
+    "keymap",
+    "plugin"
+}
 
---local config_files = {
---"opts",
---"plugin-manager",
---"keymap",
---}
-
---for _, source in ipairs(config_files) do
---local ok,fault = pcall(require,source)
---if not ok then
---util.error("Failed to load config file `" .. source .. "`:\n\t" .. fault)
---end
---end
+for _, source in ipairs(entry_files) do
+    local ok, fault = pcall(require, source)
+    if not ok then
+        vim.notify("Failed to load config file `" .. source .. "`:\n\t" .. fault, vim.log.levels.ERROR)
+    end
+end

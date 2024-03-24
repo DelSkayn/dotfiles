@@ -16,6 +16,7 @@ local function get_project_rustanalyzer_settings()
     local out = handle:read("*a")
     handle:close()
     local config = vim.json.decode(out)
+    vim.print(config)
     if type(config) == "table" then
         return config
     end
@@ -129,11 +130,19 @@ function M.config()
 
     local handlers = {
         function(server_name)
+            vim.print(server_name);
             local tmp = require("lspconfig")[server_name];
+            local opts = servers[server_name];
             -- print(vim.inspect(tmp));
-            tmp.setup(options)
+            opts = vim.tbl_deep_extend("force", {}, options, opts or {})
+            if server_name == "rust_analyzer" then
+                vim.print(opts);
+            end
+            tmp.setup(opts)
         end,
     }
+
+    require("mason-lspconfig").setup { handlers = handlers }
 
     for server, opts in pairs(servers) do
         opts = vim.tbl_deep_extend("force", {}, options, opts or {})
@@ -148,8 +157,6 @@ function M.config()
             end
         end
     end
-
-    require("mason-lspconfig").setup { handlers = handlers }
 end
 
 return M

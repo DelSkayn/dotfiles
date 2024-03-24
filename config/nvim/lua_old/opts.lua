@@ -1,4 +1,4 @@
--- File setting default configs
+--vim.o.shell = "/usr/bin/bash"
 
 vim.opt.shortmess = "atOIF"
 vim.opt.ignorecase = true
@@ -12,7 +12,9 @@ vim.opt.softtabstop = 4
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.autowrite = true
+--vim.opt.mousehide = true
 vim.opt.hidden = true
+--vim.opt.t_Co = 256
 vim.opt.ruler = true
 vim.opt.showcmd = true
 vim.opt.showmode = true
@@ -24,12 +26,16 @@ vim.opt.pumheight = 20
 vim.opt.expandtab = true
 vim.opt.guifont = "monospace"
 
+--vim.opt.t_ut=""
 
 vim.opt.winminheight = 0
 vim.opt.wildmode = { "list:longest", "full" }
 
 vim.opt.listchars = { tab = "→ ", eol = "↵", trail = "·", extends = "↷", precedes = "↶" }
 
+--vim.opt.whichwrap = vim.opt.whichwrap .. "<,>,h,l"
+
+--vim.opt.termencoding="utf-8"
 vim.opt.fileencoding = "utf-8"
 vim.opt.fileencodings = { "utf-8", "ucs-bom", "gb18030", "gbk", "gb2313", "cp936" }
 
@@ -43,6 +49,7 @@ vim.opt.swapfile = false
 vim.opt.writebackup = false
 
 vim.opt.background = "dark"
+-- vim.opt.background = "light"
 vim.opt.cursorline = true
 vim.opt.fileformats = { "unix", "dos", "mac" }
 vim.opt.number = true
@@ -61,6 +68,10 @@ vim.opt.termguicolors = true
 
 vim.g.mapleader = " "
 vim.opt.completeopt = { "menuone", "noselect" }
+
+if vim.g.started_by_firenvim then
+    vim.api.nvim_set_option("laststatus", 0)
+end
 
 local disabled_built_ins = {
     "netrw",
@@ -82,6 +93,64 @@ local disabled_built_ins = {
     "spellfile_plugin",
     "matchit",
 }
+
 for _, plugin in pairs(disabled_built_ins) do
     vim.g["loaded_" .. plugin] = 1
 end
+
+-- Don't show any numbers inside terminals
+-- vim.cmd([[ au TermOpen term://* setlocal nonumber norelativenumber | setfiletype terminal ]])
+
+vim.api.nvim_create_autocmd("TermOpen", {
+    pattern = "term://*",
+    callback = function()
+        vim.wo.number = false
+        vim.bo.filetype = "terminal"
+    end,
+})
+
+vim.api.nvim_create_autocmd("filetype", {
+    pattern = "javascript,typescript,javascriptreact,typescriptreact,svelte",
+    callback = function()
+        vim.opt.shiftwidth = 2
+        vim.opt.tabstop = 2
+        vim.opt.softtabstop = 2
+    end,
+})
+
+vim.api.nvim_create_autocmd("filetype", {
+    pattern = "tex",
+    callback = function()
+        vim.opt.shiftwidth = 2
+        vim.opt.tabstop = 2
+        vim.opt.softtabstop = 2
+        vim.cmd([[set colorcolumn=100]])
+    end,
+})
+
+-- disable statusline on some ft
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter", "CmdwinEnter", "TermEnter" }, {
+    pattern = "*",
+    callback = function()
+        local hidden = { "NvimTree", "terminal", "Trouble" }
+        local api = vim.api
+        local buftype = api.nvim_buf_get_option(0, "ft")
+        if vim.tbl_contains(hidden, buftype) then
+            api.nvim_set_option("laststatus", 0)
+            return
+        end
+        if vim.g.started_by_firenvim then
+            api.nvim_set_option("laststatus", 0)
+        else
+            api.nvim_set_option("laststatus", 2)
+        end
+    end,
+})
+
+-- vim.api.nvim_create_autocmd("filetype",{
+--   pattern = "tex",
+-- callback = function()
+--   -- to stop which key from complaining that the leader keymap is set
+-- vim.keymap.del("n","<leader>")
+-- end
+-- })

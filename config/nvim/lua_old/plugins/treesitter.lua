@@ -1,8 +1,8 @@
 local M = {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufRead", "BufNewFile" },
-    cmd = "TSEnable"
 }
+
 
 function M.config()
 
