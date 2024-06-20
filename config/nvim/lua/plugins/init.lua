@@ -52,7 +52,7 @@ return {
     {
         "nvim-pack/nvim-spectre",
         dependencies = {
-            { "nvim-pack/plenary.nvim" },
+            { "nvim-lua/plenary.nvim" },
         },
         keys = {
             { "<leader>sr", function() require("spectre").toggle() end, desc = "Open Spectre" },

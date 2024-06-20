@@ -7,7 +7,7 @@ local M = {
 local lsp_status = function()
     local msg = "No Active Lsp"
     local buf_ft = vim.opt.ft:get()
-    local clients = vim.lsp.get_active_clients()
+    local clients = vim.lsp.get_clients({ bufnr = 0 });
     if next(clients) == nil then
         return msg
     end
@@ -19,22 +19,6 @@ local lsp_status = function()
     end
     return msg
 end
-
-local lsp_progress = function()
-    local Lsp = vim.lsp.util.get_progress_messages()[1]
-    return Lsp
-        and string.format(
-            " %%<%s %s %s (%s%%%%) ",
-            ((Lsp.percentage or 0) >= 70 and { "", "", "" } or { "", "", "" })[math.floor(
-                vim.loop.hrtime() / 12e7
-            ) % 3 + 1],
-            Lsp.title or "",
-            Lsp.message or "",
-            Lsp.percentage or 0
-        )
-        or ""
-end
-
 
 function M.config()
     if vim.g.started_by_firenvim then
@@ -75,15 +59,9 @@ function M.config()
                     },
                 },
                 {
-                    lsp_progress,
-                    cond = function()
-                        return vim.lsp.util.get_progress_messages()[1] ~= nil
-                    end,
-                },
-                {
                     lsp_status,
                     cond = function()
-                        return next(vim.lsp.get_active_clients()) ~= nil
+                        return vim.lsp.get_clients({ bufnr = 0 })[1] ~= nil
                     end,
                     icon = " ",
                 },

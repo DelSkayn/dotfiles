@@ -12,7 +12,6 @@ local cmp = {
 function cmp.opts()
     local cmp = require("cmp")
     local defaults = require("cmp.config.default")();
-    vim.print(defaults)
     return {
         completion = {
             completeopt = "menu,menuone,noinster"

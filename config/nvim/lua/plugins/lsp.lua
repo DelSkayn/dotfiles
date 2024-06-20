@@ -36,7 +36,9 @@ local lsp = {
 
 lsp.config = function(_, opts)
     require("neoconf").setup()
-    require("neodev").setup()
+    require("neodev").setup({
+        library = { plugins = { "nvim-dap-ui" }, types = true }
+    })
     local cmp = require("cmp_nvim_lsp")
     local util = require("util")
 
@@ -54,6 +56,10 @@ lsp.config = function(_, opts)
         local server_opts = vim.tbl_deep_extend("force", {
             capabilities = vim.deepcopy(capabilities),
         }, servers[server] or {})
+
+        if server_opts.mason == false then
+            return
+        end
 
         if opts.setup[server] then
             if opts.setup[server](server, server_opts) then

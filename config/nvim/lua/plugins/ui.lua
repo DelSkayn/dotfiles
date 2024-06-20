@@ -52,11 +52,9 @@ local dressing = {
 local trouble = {
     "folke/trouble.nvim",
     keys = {
-        { "<leader>xx", function() require("trouble").toggle() end,                                      desc = "Toggle trouble" },
-        { "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end,               desc = "Workspace Diagnostics" },
-        { "<leader>xd", function() require("trouble").toggle("document_diagnostics") end,                desc = "Document Diagnostics" },
-        { "]t",         function() require("trouble").next({ skip_groups = true, jump = true }) end,     desc = "Next trouble" },
-        { "[t",         function() require("trouble").previous({ skip_groups = true, jump = true }) end, desc = "Previous trouble" },
+        { "<leader>xx", function() require("trouble").toggle("diagnostics") end, desc = "Toggle trouble" },
+        { "]t",         function() require("trouble").next({ jump = true }) end, desc = "Next trouble" },
+        { "[t",         function() require("trouble").prev({ jump = true }) end, desc = "Previous trouble" },
     }
 }
 
