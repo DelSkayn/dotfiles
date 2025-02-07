@@ -1,0 +1,129 @@
+(defwindow main
+  :monitor 0
+  :geometry 
+  (geometry :x "0%"
+            :y "0px"
+            :width "35px"
+            :height "100%"
+            :anchor "left center")
+  :reserve (struts :distance "0px" :side "left")
+  :exclusive true
+  :wm-ignore false
+  (bar))
+
+(deflisten workspace_status 
+  :initial '{"active":{"workspace":0,"window":""},"windows":{"":{"initialTitle":"-","title":"-"}}, "inuseWorkspaces": {}}'
+  `~/.local/bin/hyprwatch.js`
+  )
+
+(defwidget bar []
+  (centerbox
+    :orientation "v"
+    :class "bar"
+
+    (workspaces)
+    (activewindowlabel)
+    (infotray)
+    )
+  )
+
+(defwidget activewindowlabel []
+  (label
+    :class "activewindow"
+    :limit-width 80
+    :show-truncated true
+    :height 600 
+    :angle 90
+    :yalign 1
+    :valign "end"
+    :text "${workspace_status.windows[workspace_status.active.window].initialTitle} | ${workspace_status.windows[workspace_status.active.window].title}"
+    )
+  )
+
+(defwidget infotray []
+  (box
+    :orientation "v"
+    :spacing 0
+    :space-evenly false
+
+    (label 
+      :class "time-hour"
+      :text "━━")
+    (battery)
+    (time)
+    )
+  )
+
+(defwidget battery []
+  (box
+      :orientation "v"
+      :class "battery"
+    (label 
+      :orientation "v"
+      :class "bat-cap"
+      :text "${EWW_BATTERY.BAT0.capacity}")
+    (label 
+      :orientation "v"
+      :class "bat-icon"
+      :text "󱊣")
+    )
+  )
+
+(defwidget time []
+  (box
+    :orientation "v"
+    :spacing 0
+    :class "time"
+    :space-evenly false
+
+    (label 
+      :class "time-line"
+      :text "━━")
+    (label 
+      :class "time-hour"
+      :text hour)
+    (label 
+      :class "time-min"
+      :text min)
+    (label 
+      :class "time-icon"
+      :text "󰥔")
+    )
+  )
+
+(defpoll hour 
+  :interval "1s" 
+  "date '+%H'")
+(defpoll min 
+  :interval "1s" 
+  "date '+%M'")
+
+(defwidget workspace_button [id]
+  (button  
+    :class "workspace_button \
+           ${workspace_status.active.workspace == id ? "active" : "inactive" } \
+           ${id == 1 ? "first" : "" } \
+           ${workspace_status.inuseWorkspaces[id] == true ? "inuse" : "unused" }"
+    :onclick "hyprctl dispatch workspace ${id}"
+    id
+    )
+  )
+
+(defwidget workspaces []
+  (box :class "workspaces"
+       :orientation "v"
+       :space-evenly true
+       :valign "start"
+       :spacing 5 
+    (workspace_button :id 1)
+    (workspace_button :id 2)
+    (workspace_button :id 3)
+    (workspace_button :id 4)
+    (workspace_button :id 5)
+    (workspace_button :id 6)
+    (workspace_button :id 7)
+    (workspace_button :id 8)
+    (workspace_button :id 9)
+    (workspace_button :id 10)
+  )
+)

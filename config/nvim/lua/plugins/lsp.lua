@@ -111,7 +111,7 @@ lsp.config = function(_, opts)
     end)
 
     util.on_attach(function(client, bufnr)
-        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+        local ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 
         if require("plugins.null-ls").has_formatter(ft) then
             if client.name ~= "null-ls" then
@@ -146,6 +146,8 @@ local mason = {
         ensure_installed = {
             "stylua",
             "shfmt",
+            "rust-analyzer",
+            "json-lsp"
             -- "flake8",
         },
     },

@@ -1,0 +1,66 @@
+$foreground : #c0caf5;
+$background : #24283b;
+$cursor_bg : #c0caf5;
+$cursor_border : #c0caf5;
+$cursor_fg : #24283b;
+$selection_bg : #364A82;
+$selection_fg : #c0caf5;
+$tab_bg: #181b2a;
+$active_tab_bg : #292e42;
+$active_tab_fg : #c0caf5;
+$inactive_tab_fg: #737aa2;
+$inactive_tab_bg: #181b2a;
+
+*{
+    all: unset;
+}
+
+.bar{
+    margin-left: .5em;
+    margin-top: .6em;
+    margin-bottom: .6em;
+    border-radius: .4em;
+    font-family: "Terminess Nerd Font";
+    background-color: $background;
+    color: $foreground;
+    border: 1px solid $foreground
+}
+
+
+.workspace_button{
+    font-size: 16;
+    padding: .3em;
+    margin: 0px;
+    color: $inactive_tab_fg;
+    border: none;
+}
+
+.workspace_button.first{
+    border-top-left-radius: .3em;
+    border-top-right-radius: .3em;
+}
+
+
+.workspace_button.inuse{
+    background: $selection_bg;
+    color: $selection_fg;
+}
+
+.workspace_button.active{
+    color: $cursor_fg;
+    background: $cursor_bg;
+}
+
+
+
+.time{
+    font-size: 16;
+    padding: 0px;
+    margin: 0px;
+    padding-top: 1em;
+}
+
+.time-icon{
+    margin-top: .5em;
+    margin-left: -.4em;
+}

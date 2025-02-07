@@ -3,30 +3,35 @@ return {
         "folke/tokyonight.nvim",
         lazy = false,
         config = function()
-            vim.cmd([[colorscheme tokyonight]])
+            vim.cmd([[colorscheme tokyonight-night]])
             -- vim.cmd([[colorscheme tokyonight-day]])
         end,
     },
     {
         "folke/which-key.nvim",
+        dependencies = {
+            "echasnovski/mini.icons"
+        },
         event = "VeryLazy",
         init = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
             local wk = require("which-key")
-            wk.register({
-                c = { name = "+Code" },
-                b = { name = "+Buffer" },
-                f = { name = "+File" },
-                w = { name = "+Window" },
-                x = { name = "+Fix" },
-                s = { name = "+Search" },
-                u = { name = "+Util" },
-            }, { prefix = "<leader>" })
+            wk.register(
+                {
+                    { "<leader>b", group = "Buffer" },
+                    { "<leader>c", group = "Code" },
+                    { "<leader>f", group = "File" },
+                    { "<leader>s", group = "Search" },
+                    { "<leader>u", group = "Util" },
+                    { "<leader>w", group = "Window" },
+                    { "<leader>x", group = "Fix" },
+                }
+            )
         end,
     },
     {
-        "folke/neodev.nvim",
+        "folke/lazydev.nvim",
         opts = {}
     },
     {

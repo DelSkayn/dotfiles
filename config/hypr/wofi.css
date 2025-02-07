@@ -1,0 +1,37 @@
+window {
+    font-family: "Terminess Nerd Font";
+    font-size: 1.1em;
+    background-color: #181b2a;
+    color: #c0caf5;
+    padding: 20px;
+    border-radius: .5em;
+    border: 1px solid #c0caf5;
+}
+
+#input{
+    background-color: #24283b;
+    border-top-left-radius: .5em;
+    border-top-right-radius: .5em;
+    color: #c0caf5;
+    border: none;
+    padding: .4em;
+    padding-left: .6em;
+    padding-right: .6em;
+    border-top: 1px solid #c0caf5;
+    border-left: 1px solid #c0caf5;
+    border-right: 1px solid #c0caf5;
+}
+#inner-box{
+    color: #c0caf5;
+    padding-left: .3em;
+    padding-right: .3em;
+}
+#entry:selected{
+    background-color: #364A82;
+    color: #c0caf5;
+}
+
+#text:selected{
+    background-color: #364A82;
+    color: #c0caf5;
+}

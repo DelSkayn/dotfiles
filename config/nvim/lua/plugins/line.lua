@@ -28,7 +28,7 @@ function M.config()
         options = {
             --section_separators={ " ", ""},
             --component_separators = {"",""},
-            theme = "tokyonight",
+            theme = "tokyonight-night",
             --theme = "material-nvim",
             -- theme = "nord",
             disabled_filetypes = { "NvimTree", "terminal", "Trouble", "neo-tree", "toggleterm" },
@@ -41,7 +41,7 @@ function M.config()
             lualine_b = {
                 {
                     "filename",
-                    icon = " ",
+                    icon = " ",
                     condition = function()
                         return vim.fn.expand("%:t") ~= ""
                     end,
@@ -86,7 +86,7 @@ function M.config()
             lualine_b = {
                 {
                     "filename",
-                    icon = " ",
+                    icon = " ",
                     condition = function()
                         return vim.fn.expand("%:t") ~= ""
                     end,
@@ -106,7 +106,7 @@ function M.config()
                 {
                     lsp_status,
                     cond = function()
-                        return next(vim.lsp.get_active_clients()) ~= nil
+                        return next(vim.lsp.get_clients()) ~= nil
                     end,
                     icon = "  ",
                 },

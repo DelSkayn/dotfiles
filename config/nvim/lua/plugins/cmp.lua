@@ -1,4 +1,4 @@
-local cmp = {
+local mod_cmp = {
     "hrsh7th/nvim-cmp",
     version = false, -- last release is way too old
     event = "InsertEnter",
@@ -9,7 +9,7 @@ local cmp = {
     },
 }
 
-function cmp.opts()
+function mod_cmp.opts()
     local cmp = require("cmp")
     local defaults = require("cmp.config.default")();
     return {
@@ -43,7 +43,7 @@ function cmp.opts()
     }
 end
 
-function cmp.config(_, opts)
+function mod_cmp.config(_, opts)
     for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
     end
@@ -85,4 +85,4 @@ local snip = {
     },
 }
 
-return { cmp, snip }
+return { mod_cmp, snip }
