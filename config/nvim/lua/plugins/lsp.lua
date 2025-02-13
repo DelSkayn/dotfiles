@@ -4,6 +4,7 @@ local lsp = {
     dependencies = {
         { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
         { "folke/neodev.nvim",  opts = {} },
+        "neovim/nvim-lspconfig",
         "mason.nvim",
         "williamboman/mason-lspconfig.nvim"
     },
@@ -39,57 +40,30 @@ lsp.config = function(_, opts)
     require("neodev").setup({
         library = { plugins = { "nvim-dap-ui" }, types = true }
     })
-    local cmp = require("cmp_nvim_lsp")
+    require("mason").setup()
+    require("mason-lspconfig").setup({
+        ensure_installed = opts.ensure_installed or {},
+    })
+
+    local lspconfig = require("lspconfig")
     local util = require("util")
 
-    local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        cmp.default_capabilities(),
-        opts.capabilities or {}
-    )
-
-    local servers = opts.servers
-
-    local function setup(server)
-        local server_opts = vim.tbl_deep_extend("force", {
-            capabilities = vim.deepcopy(capabilities),
-        }, servers[server] or {})
-
-        if server_opts.mason == false then
-            return
-        end
-
-        if opts.setup[server] then
-            if opts.setup[server](server, server_opts) then
-                return
+    require("mason-lspconfig").setup_handlers {
+        function(server_name)
+            local config = opts.servers[server_name] or {}
+            if config.mason == nil or config.mason == true then
+                config.mason = true
+                lspconfig[server_name].setup(require('blink.cmp').get_lsp_capabilities(config))
             end
-        elseif opts.setup["*"] then
-            if opts.setup["*"](server, server_opts) then
-                return
-            end
-        end
-        require("lspconfig")[server].setup(server_opts)
-    end
+        end,
+    }
 
-    local mlsp = require("mason-lspconfig")
-    local mason_lsp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
-
-    local ensure_installed = {} ---@type string[]
-    for server, server_opts in pairs(servers) do
-        if server_opts then
-            server_opts = server_opts == true and {} or server_opts
-            -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-            if server_opts.mason == false or not vim.tbl_contains(mason_lsp_servers, server) then
-                setup(server)
-            else
-                ensure_installed[#ensure_installed + 1] = server
-            end
+    for server, config in pairs(opts.servers) do
+        if not config.mason then
+            config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+            lspconfig[server].setup(config)
         end
     end
-
-    mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
 
     util.on_attach(function()
         vim.keymap.set("n", "<leader>cl", "<cmd>LspInfo<cr>", { desc = "Lsp Info" })
