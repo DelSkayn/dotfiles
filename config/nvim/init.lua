@@ -2,7 +2,8 @@ local entry_files = {
     "opts",
     "autocmd",
     "keymap",
-    "plugin"
+    "plugin",
+    "lsp",
 }
 
 for _, source in ipairs(entry_files) do

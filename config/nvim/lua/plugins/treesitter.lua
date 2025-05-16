@@ -5,6 +5,11 @@ local M = {
 }
 
 function M.config()
+    -- Makes ```ts in markdown parse as typescript
+    vim.g.markdown_fenced_langauges = {
+        "ts=typescript",
+    }
+
     local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
     parser_config.surrealql = {
         install_info = {
